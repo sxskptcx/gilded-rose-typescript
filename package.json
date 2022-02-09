@@ -5,7 +5,8 @@
   "main": "fixture.js",
   "scripts": {
     "test": "jest",
-    "fixture": "ts-node fixture.ts"
+    "fixture": "ts-node fixture.ts",
+    "jest:watch": "jest --watch --coverage"
   },
   "author": "Attila Kerekes",
   "license": "ISC",
