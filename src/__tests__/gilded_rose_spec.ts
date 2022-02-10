@@ -148,6 +148,16 @@ describe("Gilded Rose", () => {
             expect(updatedItems[1].quality).toEqual(MIN_QUALITY);
         });
 
+        it("doesn't change the quality if it's already maximum(50) and not expired", ()=>{
+            const gildedRose = new Shop([
+                new Item('Backstage passes to a TAFKAL80ETC concert', 10, MAX_QUALITY)
+            ]);
+
+            const updatedItems = gildedRose.updateQuality();
+
+            expect(updatedItems[0].quality).toEqual(MAX_QUALITY);
+        });
+
     })
 });
 
