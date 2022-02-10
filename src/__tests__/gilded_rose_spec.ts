@@ -48,6 +48,15 @@ describe("Gilded Rose", () => {
 
             expect(updatedItems[0].quality).not.toBeGreaterThan(MAX_QUALITY);
         });
+
+        it("doesnt decrease the quality if it's already 0", () => {
+            const gildedRose = new Shop([new Item("foo", -1, 0)]);
+
+            const updatedItems = gildedRose.updateQuality();
+
+            expect(updatedItems[0].quality).toEqual(0);
+        });
+
     })
 
     describe('Aged Brie', () => {
