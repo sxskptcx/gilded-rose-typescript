@@ -10,8 +10,10 @@ export class Item {
     }
 }
 
+const MAX_QUALITY = 50;
+
 function increaseQuality(item: Item) {
-    if (item.quality < 50) {
+    if (item.quality < MAX_QUALITY) {
         item.quality += 1;
     }
 }
@@ -40,13 +42,13 @@ export class Shop {
             }
 
             if (isAcquiredTaste || isTicket) {
-                if (item.quality < 50) {
+                if (item.quality < MAX_QUALITY) {
                     item.quality = item.quality + 1;
                     if (isTicket) {
-                        if (item.sellIn < 11) {
+                        if (item.sellIn <= 10) {
                             increaseQuality(item);
                         }
-                        if (item.sellIn < 6) {
+                        if (item.sellIn <= 5) {
                             increaseQuality(item);
                         }
                     }
