@@ -32,6 +32,7 @@ export class Shop {
             if (isLegendary) {
                 return;
             }
+
             if (isAcquiredTaste || isTicket) {
                 if (item.quality < 50) {
                     item.quality = item.quality + 1;
@@ -44,18 +45,10 @@ export class Shop {
                         }
                     }
                 }
-            } else {
-                if (item.quality > 0) {
-                    if (isLegendary) {
-                    } else {
-                        item.quality -= 1;
-                    }
-                }
+            } else if (item.quality > 0) {
+                item.quality -= 1;
             }
-            if (isLegendary) {
-            } else {
-                item.sellIn = item.sellIn - 1;
-            }
+            item.sellIn = item.sellIn - 1;
             if (item.sellIn < 0) {
                 if (isAcquiredTaste) {
                     increaseQuality(item);
