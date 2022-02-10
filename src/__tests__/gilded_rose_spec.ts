@@ -121,6 +121,19 @@ describe("Gilded Rose", () => {
             expect(updatedItems[1].quality).toEqual(initialQuality + 2);
         });
 
+        it("increases the quality by 3 if quality <50 and sellin <=5 & >0", ()=>{
+            const initialQuality = 20;
+            const gildedRose = new Shop([
+                new Item('Backstage passes to a TAFKAL80ETC concert', 5, initialQuality),
+                new Item('Backstage passes to a TAFKAL80ETC concert', 1, initialQuality)
+            ]);
+
+            const updatedItems = gildedRose.updateQuality();
+
+            expect(updatedItems[0].quality).toEqual(initialQuality + 3);
+            expect(updatedItems[1].quality).toEqual(initialQuality + 3);
+        });
+
     })
 });
 
