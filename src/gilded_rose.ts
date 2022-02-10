@@ -16,6 +16,12 @@ function increaseQuality(item: Item) {
     }
 }
 
+function decreaseQuality(item: Item) {
+    if (item.quality > 0) {
+        item.quality -= 1;
+    }
+}
+
 export class Shop {
     items: Item[];
 
@@ -45,9 +51,7 @@ export class Shop {
                         }
                     }
                 }
-            } else if (item.quality > 0) {
-                item.quality -= 1;
-            }
+            } else decreaseQuality(item);
             item.sellIn = item.sellIn - 1;
             if (item.sellIn < 0) {
                 if (isAcquiredTaste) {
