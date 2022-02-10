@@ -24,6 +24,10 @@ function decreaseQuality(item: Item) {
     }
 }
 
+function decreaseSellIn(item: Item) {
+    item.sellIn -= 1;
+}
+
 function updateItemQuality(item: Item) {
     const isAcquiredTaste = item.name == 'Aged Brie';
     const isTicket = item.name == 'Backstage passes to a TAFKAL80ETC concert';
@@ -33,7 +37,16 @@ function updateItemQuality(item: Item) {
         return;
     }
 
-    if (isAcquiredTaste || isTicket) {
+    if (isAcquiredTaste) {
+        increaseQuality(item);
+        decreaseSellIn(item);
+        if (item.sellIn < 0) {
+            increaseQuality(item);
+        }
+        return;
+    }
+
+    if (isTicket) {
         increaseQuality(item);
         if (isTicket) {
             if (item.sellIn <= 10) {
@@ -44,11 +57,11 @@ function updateItemQuality(item: Item) {
             }
         }
     } else decreaseQuality(item);
-    item.sellIn -= 1;
+
+    decreaseSellIn(item);
+
     if (item.sellIn < 0) {
-        if (isAcquiredTaste) {
-            increaseQuality(item);
-        } else if (isTicket) {
+        if (isTicket) {
             item.quality = item.quality - item.quality;
         } else {
             decreaseQuality(item);
