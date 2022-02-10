@@ -25,44 +25,49 @@ export class Shop {
             const isTicket = item.name == 'Backstage passes to a TAFKAL80ETC concert';
             const isLegendary = item.name == 'Sulfuras, Hand of Ragnaros';
 
-            if (!isAcquiredTaste && !isTicket) {
+            if (isAcquiredTaste || isTicket) {
+                if (item.quality < 50) {
+                    item.quality = item.quality + 1;
+                    if (isTicket) {
+                        if (item.sellIn < 11) {
+                            if (item.quality < 50) {
+                                item.quality = item.quality + 1;
+                            }
+                        }
+                        if (item.sellIn < 6) {
+                            if (item.quality < 50) {
+                                item.quality = item.quality + 1;
+                            }
+                        }
+                    }
+                }
+            } else {
                 if (item.quality > 0) {
-                    if (!isLegendary) {
+                    if (isLegendary) {
+                    } else {
                         item.quality = item.quality - 1;
                     }
                 }
-            } else if (item.quality < 50) {
-                item.quality = item.quality + 1;
-                if (isTicket) {
-                    if (item.sellIn < 11) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
-                    if (item.sellIn < 6) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
-                }
             }
-            if (!isLegendary) {
+            if (isLegendary) {
+            } else {
                 item.sellIn = item.sellIn - 1;
             }
             if (item.sellIn < 0) {
-                if (!isAcquiredTaste) {
-                    if (!isTicket) {
-                        if (item.quality > 0) {
-                            if (!isLegendary) {
-                                item.quality = item.quality - 1;
-                            }
-                        }
-                    } else {
-                        item.quality = item.quality - item.quality;
-                    }
-                } else {
+                if (isAcquiredTaste) {
                     if (item.quality < 50) {
                         item.quality = item.quality + 1;
+                    }
+                } else {
+                    if (isTicket) {
+                        item.quality = item.quality - item.quality;
+                    } else {
+                        if (item.quality > 0) {
+                            if (isLegendary) {
+                                continue;
+                            }
+                            item.quality = item.quality - 1;
+                        }
                     }
                 }
             }
