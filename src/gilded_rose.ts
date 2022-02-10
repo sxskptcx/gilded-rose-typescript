@@ -52,16 +52,14 @@ export class Shop {
                     }
                 }
             } else decreaseQuality(item);
-            item.sellIn = item.sellIn - 1;
+            item.sellIn -= 1;
             if (item.sellIn < 0) {
                 if (isAcquiredTaste) {
                     increaseQuality(item);
                 } else {
                     if (isTicket) {
                         item.quality = item.quality - item.quality;
-                    } else if (item.quality > 0) {
-                        item.quality -= 1;
-                    }
+                    } else decreaseQuality(item);
                 }
             }
         });
