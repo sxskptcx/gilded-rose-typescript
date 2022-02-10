@@ -23,12 +23,19 @@ describe("Gilded Rose", () => {
     });
 
     it("should decrease sellin by 1 of Aged Brie and quality by 1 if <50", () => {
-        const items = JSON.parse(JSON.stringify(itemsGlobal));
-        const gildedRose = new Shop([items[1]]);
+        const gildedRose = new Shop([new Item('Aged Brie', 2, 0)]);
 
         const updatedItems = gildedRose.updateQuality();
 
         expect(updatedItems[0].quality).toEqual(1);
+    });
+
+    it("should increase quality of Aged Brie by 2 if expired", () => {
+        const gildedRose = new Shop([new Item('Aged Brie', -1, 0)]);
+
+        const updatedItems = gildedRose.updateQuality();
+
+        expect(updatedItems[0].quality).toEqual(2);
     });
 
 });
