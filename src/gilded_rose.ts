@@ -56,10 +56,10 @@ export class Shop {
             if (item.sellIn < 0) {
                 if (isAcquiredTaste) {
                     increaseQuality(item);
+                } else if (isTicket) {
+                    item.quality = item.quality - item.quality;
                 } else {
-                    if (isTicket) {
-                        item.quality = item.quality - item.quality;
-                    } else decreaseQuality(item);
+                    decreaseQuality(item);
                 }
             }
         });
