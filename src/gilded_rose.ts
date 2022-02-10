@@ -18,8 +18,10 @@ function increaseQuality(item: Item) {
     }
 }
 
+const MIN_QUALITY = 0;
+
 function decreaseQuality(item: Item) {
-    if (item.quality > 0) {
+    if (item.quality > MIN_QUALITY) {
         item.quality -= 1;
     }
 }
@@ -28,12 +30,14 @@ function decreaseSellIn(item: Item) {
     item.sellIn -= 1;
 }
 
+const MIN_SELLIN = 0;
+
 function updateRegularQuality(item: Item) {
     decreaseQuality(item);
 
     decreaseSellIn(item);
 
-    if (item.sellIn < 0) {
+    if (item.sellIn < MIN_SELLIN) {
         decreaseQuality(item);
     }
 }
@@ -50,7 +54,7 @@ function updateTicketQuality(item: Item) {
     decreaseSellIn(item);
 
     if (item.sellIn < 0) {
-        item.quality = item.quality - item.quality;
+        item.quality = MIN_QUALITY;
     }
 }
 
