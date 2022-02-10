@@ -34,15 +34,13 @@ function updateItemQuality(item: Item) {
     }
 
     if (isAcquiredTaste || isTicket) {
-        if (item.quality < MAX_QUALITY) {
-            item.quality = item.quality + 1;
-            if (isTicket) {
-                if (item.sellIn <= 10) {
-                    increaseQuality(item);
-                }
-                if (item.sellIn <= 5) {
-                    increaseQuality(item);
-                }
+        increaseQuality(item);
+        if (isTicket) {
+            if (item.sellIn <= 10) {
+                increaseQuality(item);
+            }
+            if (item.sellIn <= 5) {
+                increaseQuality(item);
             }
         }
     } else decreaseQuality(item);
