@@ -4,6 +4,7 @@ const MIN_QUALITY = 0;
 const MAX_QUALITY = 50;
 
 describe("Gilded Rose", () => {
+
     it("doesnt fail if shop is empty", () => {
         const gildedRose = new Shop();
 
