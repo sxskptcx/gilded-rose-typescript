@@ -10,6 +10,12 @@ export class Item {
     }
 }
 
+function increaseQuality(item: Item) {
+    if (item.quality < 50) {
+        item.quality += 1;
+    }
+}
+
 export class Shop {
     items: Item[];
 
@@ -30,14 +36,10 @@ export class Shop {
                     item.quality = item.quality + 1;
                     if (isTicket) {
                         if (item.sellIn < 11) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1;
-                            }
+                            increaseQuality(item);
                         }
                         if (item.sellIn < 6) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1;
-                            }
+                            increaseQuality(item);
                         }
                     }
                 }
@@ -45,7 +47,7 @@ export class Shop {
                 if (item.quality > 0) {
                     if (isLegendary) {
                     } else {
-                        item.quality = item.quality - 1;
+                        item.quality -= 1;
                     }
                 }
             }
@@ -55,9 +57,7 @@ export class Shop {
             }
             if (item.sellIn < 0) {
                 if (isAcquiredTaste) {
-                    if (item.quality < 50) {
-                        item.quality = item.quality + 1;
-                    }
+                    increaseQuality(item);
                 } else {
                     if (isTicket) {
                         item.quality = item.quality - item.quality;
@@ -65,7 +65,7 @@ export class Shop {
                         if (isLegendary) {
                             continue;
                         }
-                        item.quality = item.quality - 1;
+                        item.quality -= 1;
                     }
                 }
             }
