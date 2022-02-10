@@ -12,6 +12,7 @@ itemsGlobal.push(new Item('Backstage passes to a TAFKAL80ETC concert', 10, 49));
 itemsGlobal.push(new Item('Backstage passes to a TAFKAL80ETC concert', 5, 49));
 
 
+const MIN_QUALITY = 0;
 describe("Gilded Rose", () => {
 
     it("should decrease sellin by 1 of item foo if quality>0", () => {
@@ -36,6 +37,22 @@ describe("Gilded Rose", () => {
         const updatedItems = gildedRose.updateQuality();
 
         expect(updatedItems[0].quality).toEqual(2);
+    });
+
+    it("doesn't change the quality of an item to below 0", () => {
+        const gildedRose = new Shop([new Item("foo", 0, MIN_QUALITY)]);
+
+        const updatedItems = gildedRose.updateQuality();
+
+        expect(updatedItems[0].quality).toEqual(MIN_QUALITY);
+    });
+
+    it("doesn't change the quality of an item to below 0", () => {
+        const gildedRose = new Shop([new Item("foo", 0, MIN_QUALITY)]);
+
+        const updatedItems = gildedRose.updateQuality();
+
+        expect(updatedItems[0].quality).toEqual(MIN_QUALITY);
     });
 
 });
