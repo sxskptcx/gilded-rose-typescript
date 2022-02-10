@@ -15,7 +15,7 @@ itemsGlobal.push(new Item('Backstage passes to a TAFKAL80ETC concert', 5, 49));
 const MIN_QUALITY = 0;
 const MAX_QUALITY = 50;
 describe("Gilded Rose", () => {
-    describe('Regular item', ()=>{
+    describe('Regular item', () => {
         it("should decrease sellin by 1 of regular item if quality>0", () => {
             const gildedRose = new Shop([new Item("foo", 0, 0)]);
 
@@ -74,7 +74,28 @@ describe("Gilded Rose", () => {
 
             expect(updatedItems[0].quality).toEqual(MAX_QUALITY);
         });
-
     });
+
+    describe('legendary items', ()=>{
+        const LEGENDARY_FIXED_80 = 80;
+
+        it("doesn't change the quality of legendary items if not expired", ()=>{
+            const gildedRose = new Shop([new Item('Sulfuras, Hand of Ragnaros', 1, LEGENDARY_FIXED_80)]);
+
+            const updatedItems = gildedRose.updateQuality();
+
+            expect(updatedItems[0].quality).toEqual(LEGENDARY_FIXED_80);
+        });
+
+        it("doesn't change the sellin of legendary items if not expired", ()=>{
+            const initialSellIn = 1;
+            const gildedRose = new Shop([new Item('Sulfuras, Hand of Ragnaros', initialSellIn, LEGENDARY_FIXED_80)]);
+
+            const updatedItems = gildedRose.updateQuality();
+
+            expect(updatedItems[0].sellIn).toEqual(initialSellIn);
+        });
+
+    })
 });
 
