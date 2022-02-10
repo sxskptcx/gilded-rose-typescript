@@ -24,13 +24,14 @@ export class Shop {
     }
 
     updateQuality() {
-        for (var i = 0; i < this.items.length; i++) {
-            const item = this.items[i];
-
+        this.items.forEach((item)=>{
             const isAcquiredTaste = item.name == 'Aged Brie';
             const isTicket = item.name == 'Backstage passes to a TAFKAL80ETC concert';
             const isLegendary = item.name == 'Sulfuras, Hand of Ragnaros';
 
+            if (isLegendary) {
+                return;
+            }
             if (isAcquiredTaste || isTicket) {
                 if (item.quality < 50) {
                     item.quality = item.quality + 1;
@@ -62,14 +63,11 @@ export class Shop {
                     if (isTicket) {
                         item.quality = item.quality - item.quality;
                     } else if (item.quality > 0) {
-                        if (isLegendary) {
-                            continue;
-                        }
                         item.quality -= 1;
                     }
                 }
             }
-        }
+        });
 
         return this.items;
     }
