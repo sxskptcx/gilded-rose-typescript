@@ -38,6 +38,22 @@ function updateRegularQuality(item: Item) {
     }
 }
 
+function updateTicketQuality(item: Item) {
+    increaseQuality(item);
+    if (item.sellIn <= 10) {
+        increaseQuality(item);
+    }
+    if (item.sellIn <= 5) {
+        increaseQuality(item);
+    }
+
+    decreaseSellIn(item);
+
+    if (item.sellIn < 0) {
+        item.quality = item.quality - item.quality;
+    }
+}
+
 function updateItemQuality(item: Item) {
     const isAcquiredTaste = item.name == 'Aged Brie';
     const isTicket = item.name == 'Backstage passes to a TAFKAL80ETC concert';
@@ -57,20 +73,7 @@ function updateItemQuality(item: Item) {
     }
 
     if (isTicket) {
-        increaseQuality(item);
-        if (item.sellIn <= 10) {
-            increaseQuality(item);
-        }
-        if (item.sellIn <= 5) {
-            increaseQuality(item);
-        }
-
-        decreaseSellIn(item);
-
-        if (item.sellIn < 0) {
-            item.quality = item.quality - item.quality;
-        }
-
+        updateTicketQuality(item);
         return;
     }
 
