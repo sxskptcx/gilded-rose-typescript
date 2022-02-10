@@ -61,13 +61,11 @@ export class Shop {
                 } else {
                     if (isTicket) {
                         item.quality = item.quality - item.quality;
-                    } else {
-                        if (item.quality > 0) {
-                            if (isLegendary) {
-                                continue;
-                            }
-                            item.quality = item.quality - 1;
+                    } else if (item.quality > 0) {
+                        if (isLegendary) {
+                            continue;
                         }
+                        item.quality = item.quality - 1;
                     }
                 }
             }
