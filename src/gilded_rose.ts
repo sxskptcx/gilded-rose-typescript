@@ -48,30 +48,33 @@ function updateItemQuality(item: Item) {
 
     if (isTicket) {
         increaseQuality(item);
-        if (isTicket) {
-            if (item.sellIn <= 10) {
-                increaseQuality(item);
-            }
-            if (item.sellIn <= 5) {
-                increaseQuality(item);
-            }
+        if (item.sellIn <= 10) {
+            increaseQuality(item);
         }
-    } else decreaseQuality(item);
+        if (item.sellIn <= 5) {
+            increaseQuality(item);
+        }
+
+        decreaseSellIn(item);
+
+        if (item.sellIn < 0) {
+            item.quality = item.quality - item.quality;
+        }
+
+        return;
+    }
+
+    decreaseQuality(item);
 
     decreaseSellIn(item);
 
     if (item.sellIn < 0) {
-        if (isTicket) {
-            item.quality = item.quality - item.quality;
-        } else {
-            decreaseQuality(item);
-        }
+        decreaseQuality(item);
     }
 }
 
 export class Shop {
     items: Item[];
-
     constructor(items: Item[] = []) {
         this.items = items;
     }
