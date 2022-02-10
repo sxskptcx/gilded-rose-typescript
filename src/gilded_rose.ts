@@ -46,21 +46,30 @@ function updateAcquiredQuality(item: Item) {
     }
 }
 
-function updateItemQuality(item: Item) {
-    const isAcquiredTaste = item.name == 'Aged Brie';
-    const isTicket = item.name == 'Backstage passes to a TAFKAL80ETC concert';
-    const isLegendary = item.name == 'Sulfuras, Hand of Ragnaros';
+function isLegendaryItem(item: Item) {
+    return item.name == 'Sulfuras, Hand of Ragnaros';
+}
 
-    if (isLegendary) {
+function isTicketItem(item: Item) {
+    return item.name == 'Backstage passes to a TAFKAL80ETC concert';
+}
+
+function isAcquiredTaste(item: Item) {
+    return item.name == 'Aged Brie';
+}
+
+function updateItemQuality(item: Item) {
+
+    if (isLegendaryItem(item)) {
         return;
     }
 
-    if (isAcquiredTaste) {
+    if (isAcquiredTaste(item)) {
         updateAcquiredQuality(item);
         return;
     }
 
-    if (isTicket) {
+    if (isTicketItem(item)) {
         updateTicketQuality(item);
         return;
     }
