@@ -28,6 +28,16 @@ function decreaseSellIn(item: Item) {
     item.sellIn -= 1;
 }
 
+function updateRegularQuality(item: Item) {
+    decreaseQuality(item);
+
+    decreaseSellIn(item);
+
+    if (item.sellIn < 0) {
+        decreaseQuality(item);
+    }
+}
+
 function updateItemQuality(item: Item) {
     const isAcquiredTaste = item.name == 'Aged Brie';
     const isTicket = item.name == 'Backstage passes to a TAFKAL80ETC concert';
@@ -64,13 +74,7 @@ function updateItemQuality(item: Item) {
         return;
     }
 
-    decreaseQuality(item);
-
-    decreaseSellIn(item);
-
-    if (item.sellIn < 0) {
-        decreaseQuality(item);
-    }
+    updateRegularQuality(item);
 }
 
 export class Shop {
