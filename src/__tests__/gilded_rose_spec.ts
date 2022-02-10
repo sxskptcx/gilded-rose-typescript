@@ -15,6 +15,13 @@ itemsGlobal.push(new Item('Backstage passes to a TAFKAL80ETC concert', 5, 49));
 const MIN_QUALITY = 0;
 const MAX_QUALITY = 50;
 describe("Gilded Rose", () => {
+    it("doesnt fail if shop", () => {
+        const gildedRose = new Shop();
+
+        const updatedItems = gildedRose.updateQuality();
+
+        expect(updatedItems).toHaveLength(0);
+    });
     describe('Regular item', () => {
         it("should decrease sellin by 1 of regular item if quality>0", () => {
             const gildedRose = new Shop([new Item("foo", 0, 0)]);
@@ -85,10 +92,10 @@ describe("Gilded Rose", () => {
         });
     });
 
-    describe('legendary items', ()=>{
+    describe('legendary items', () => {
         const LEGENDARY_FIXED_80 = 80;
 
-        it("doesn't change the quality of legendary items if not expired", ()=>{
+        it("doesn't change the quality of legendary items if not expired", () => {
             const gildedRose = new Shop([new Item('Sulfuras, Hand of Ragnaros', 1, LEGENDARY_FIXED_80)]);
 
             const updatedItems = gildedRose.updateQuality();
@@ -96,7 +103,7 @@ describe("Gilded Rose", () => {
             expect(updatedItems[0].quality).toEqual(LEGENDARY_FIXED_80);
         });
 
-        it("doesn't change the sellin of legendary items if not expired", ()=>{
+        it("doesn't change the sellin of legendary items if not expired", () => {
             const initialSellIn = 1;
             const gildedRose = new Shop([new Item('Sulfuras, Hand of Ragnaros', initialSellIn, LEGENDARY_FIXED_80)]);
 
@@ -106,9 +113,9 @@ describe("Gilded Rose", () => {
         });
 
     })
-    describe('backstage passes', ()=>{
+    describe('backstage passes', () => {
 
-        it("increases the quality by 1 if quality <50 and sellin >10", ()=>{
+        it("increases the quality by 1 if quality <50 and sellin >10", () => {
             const initialQuality = 20;
             const gildedRose = new Shop([new Item('Backstage passes to a TAFKAL80ETC concert', 15, initialQuality)]);
 
@@ -117,7 +124,7 @@ describe("Gilded Rose", () => {
             expect(updatedItems[0].quality).toEqual(initialQuality + 1);
         });
 
-        it("increases the quality by 2 if quality <50 and sellin 6-10", ()=>{
+        it("increases the quality by 2 if quality <50 and sellin 6-10", () => {
             const initialQuality = 20;
             const gildedRose = new Shop([
                 new Item('Backstage passes to a TAFKAL80ETC concert', 10, initialQuality),
@@ -130,7 +137,7 @@ describe("Gilded Rose", () => {
             expect(updatedItems[1].quality).toEqual(initialQuality + 2);
         });
 
-        it("increases the quality by 3 if quality <50 and sellin <=5 & >0", ()=>{
+        it("increases the quality by 3 if quality <50 and sellin <=5 & >0", () => {
             const initialQuality = 20;
             const gildedRose = new Shop([
                 new Item('Backstage passes to a TAFKAL80ETC concert', 5, initialQuality),
@@ -143,7 +150,7 @@ describe("Gilded Rose", () => {
             expect(updatedItems[1].quality).toEqual(initialQuality + 3);
         });
 
-        it("sets the quality to min quality if sellin <=0", ()=>{
+        it("sets the quality to min quality if sellin <=0", () => {
             const MIN_QUALITY = 0;
             const initialQuality = 20;
             const gildedRose = new Shop([
@@ -157,7 +164,7 @@ describe("Gilded Rose", () => {
             expect(updatedItems[1].quality).toEqual(MIN_QUALITY);
         });
 
-        it("doesn't change the quality if it's already maximum(50) and not expired", ()=>{
+        it("doesn't change the quality if it's already maximum(50) and not expired", () => {
             const gildedRose = new Shop([
                 new Item('Backstage passes to a TAFKAL80ETC concert', 10, MAX_QUALITY)
             ]);
