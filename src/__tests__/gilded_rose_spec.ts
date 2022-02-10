@@ -97,5 +97,17 @@ describe("Gilded Rose", () => {
         });
 
     })
+    describe('backstage passes', ()=>{
+
+        it("increases the quality by 1 if quality <50 and sellin >10", ()=>{
+            const initialQuality = 20;
+            const gildedRose = new Shop([new Item('Backstage passes to a TAFKAL80ETC concert', 15, initialQuality)]);
+
+            const updatedItems = gildedRose.updateQuality();
+
+            expect(updatedItems[0].quality).toEqual(initialQuality + 1);
+        });
+
+    })
 });
 
