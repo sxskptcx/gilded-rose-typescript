@@ -13,6 +13,7 @@ itemsGlobal.push(new Item('Backstage passes to a TAFKAL80ETC concert', 5, 49));
 
 
 const MIN_QUALITY = 0;
+const MAX_QUALITY = 50;
 describe("Gilded Rose", () => {
     describe('Regular item', ()=>{
         it("should decrease sellin by 1 of regular item if quality>0", () => {
@@ -56,6 +57,14 @@ describe("Gilded Rose", () => {
             const updatedItems = gildedRose.updateQuality();
 
             expect(updatedItems[0].quality).toEqual(2);
+        });
+
+        it("should not increase quality of Aged Brie if it's already 50", () => {
+            const gildedRose = new Shop([new Item('Aged Brie', -1, MAX_QUALITY)]);
+
+            const updatedItems = gildedRose.updateQuality();
+
+            expect(updatedItems[0].quality).toEqual(MAX_QUALITY);
         });
 
     });
