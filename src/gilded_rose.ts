@@ -1,3 +1,5 @@
+import {decreaseQuality, decreaseSellIn, increaseQuality, MIN_QUALITY, MIN_SELLIN} from "./utils";
+
 export class Item {
     name: string;
     sellIn: number;
@@ -9,28 +11,6 @@ export class Item {
         this.quality = quality;
     }
 }
-
-const MAX_QUALITY = 50;
-
-function increaseQuality(item: Item) {
-    if (item.quality < MAX_QUALITY) {
-        item.quality += 1;
-    }
-}
-
-const MIN_QUALITY = 0;
-
-function decreaseQuality(item: Item) {
-    if (item.quality > MIN_QUALITY) {
-        item.quality -= 1;
-    }
-}
-
-function decreaseSellIn(item: Item) {
-    item.sellIn -= 1;
-}
-
-const MIN_SELLIN = 0;
 
 function updateRegularQuality(item: Item) {
     decreaseQuality(item);
