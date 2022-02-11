@@ -13,19 +13,66 @@ const BACKSTAGE = 'Backstage passes to a TAFKAL80ETC concert';
 const SULFURAS = 'Sulfuras, Hand of Ragnaros';
 
 function increaseItemQuality(item) {
-  return item.quality += 1;
+  if (canIncreaseQuality(item)) {
+    return item.quality += 1;
+  }
 }
 
 function decreaseItemQuality(item) {
-  return item.quality -= 1;
+  if(!isMinimumQuality(item)) {
+    return item.quality -= 1;
+  }
 }
-
-// function increaseSellIn(item) {
-//   return item.sellIn += 1;
-// }
 
 function decreaseSellIn(item) {
   return item.sellIn -= 1;
+}
+
+function updateForBackstage(item) {
+    increaseItemQuality(item)
+    if (item.sellIn < 11) {
+      increaseItemQuality(item)
+    }
+    if (item.sellIn < 6) {
+      increaseItemQuality(item)
+    }
+    if (isExpired(item)) {
+      setQualityToZero(item)
+    }
+}
+
+function updateForAgedBrie(item) {
+  increaseItemQuality(item)
+
+  if (isExpired(item)) {
+    increaseItemQuality(item)
+  }
+}
+
+
+
+function updateForRegularItem(item) {
+  decreaseItemQuality(item)
+  if (isExpired(item)) {
+    decreaseItemQuality(item)
+  }
+}
+
+function isExpired(item) {
+  return item.sellIn < 0
+}
+
+
+function canIncreaseQuality(item) {
+  return item.quality < 50
+}
+
+function isMinimumQuality(item) {
+  return item.quality === 0
+}
+
+function setQualityToZero(item) {
+  return item.quality = 0;
 }
 
 
@@ -50,49 +97,21 @@ export class Shop {
 
   updateQuality() {
     this.items.forEach((item) => {
-      if (item.name != AGED_BRIE && item.name != BACKSTAGE) {
-        if (item.quality > 0) {
-          if (item.name != SULFURAS) {
-            decreaseItemQuality(item)
-          }
-        }
-      } else {
-        if (item.quality < 50) {
-          increaseItemQuality(item)
-          if (item.name == BACKSTAGE) {
-            if (item.sellIn < 11) {
-              if (item.quality < 50) {
-                increaseItemQuality(item)
-              }
-            }
-            if (item.sellIn < 6) {
-              if (item.quality < 50) {
-                increaseItemQuality(item)
-              }
-            }
-          }
-        }
+      if (item.name === SULFURAS) return;
+
+      decreaseSellIn(item);
+
+      if (item.name === AGED_BRIE) {
+        updateForAgedBrie(item);
+        return;
       }
-      if (item.name != SULFURAS) {
-        decreaseSellIn(item);
+
+      if (item.name === BACKSTAGE) {
+        updateForBackstage(item);
+        return;
       }
-      if (item.sellIn < 0) {
-        if (item.name != AGED_BRIE) {
-          if (item.name != BACKSTAGE) {
-            if (item.quality > 0) {
-              if (item.name != SULFURAS) {
-                decreaseItemQuality(item)
-              }
-            }
-          } else {
-            item.quality -= item.quality;
-          }
-        } else {
-          if (item.quality < 50) {
-            increaseItemQuality(item)
-          }
-        }
-      }
+
+      updateForRegularItem(item)
     })
 
     return this.items;

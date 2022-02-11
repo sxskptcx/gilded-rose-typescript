@@ -32,7 +32,13 @@ describe("Gilded Rose", () => {
         expect(items[0].quality).toEqual(31);
     });
 
-    it("increases quality for Aged Brie if the sell is is already passed 0", () => {
+    it("increases quality for Aged Brie the older it gets", () => {
+        const gildedRose = new Shop([new Item("Aged Brie", -1, 49)]);
+        const items = gildedRose.updateQuality();
+        expect(items[0].quality).toEqual(50);
+    });
+
+    it("increases quality for Aged Brie if the sellIn is is already passed 0", () => {
         const gildedRose = new Shop([new Item("Aged Brie", -1, 30)]);
         const items = gildedRose.updateQuality();
         expect(items[0].quality).toEqual(32);
