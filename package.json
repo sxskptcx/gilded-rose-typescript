@@ -4,7 +4,8 @@
   "description": "The Gilded Rose refactoring Kata",
   "main": "fixture.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --watch",
+    "test:coverage": "jest --coverage",
     "fixture": "ts-node fixture.ts"
   },
   "author": "Attila Kerekes",
