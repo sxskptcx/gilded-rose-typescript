@@ -1,14 +1,7 @@
-export class Item {
-  name: string;
-  sellIn: number;
-  quality: number;
-
-  constructor(name: string, sellIn: number, quality: number) {
-    this.name = name;
-    this.sellIn = sellIn;
-    this.quality = quality;
-  }
-}
+import {ItemNames} from "./ItemNames";
+import {Item} from "./Item";
+import guardQuality from "./guardQuality";
+import isConjured from "./isConjured";
 
 export class Shop {
   items: Item[];
@@ -18,52 +11,34 @@ export class Shop {
   }
 
   updateQuality() {
-    for (var i = 0; i < this.items.length; i++) {
-      if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-        if (this.items[i].quality > 0) {
-          if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-            this.items[i].quality = this.items[i].quality - 1;
-          }
-        }
-      } else {
-        if (this.items[i].quality < 50) {
-          this.items[i].quality = this.items[i].quality + 1;
-          if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
-              }
-            }
-            if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
-              }
-            }
-          }
-        }
-      }
-      if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-        this.items[i].sellIn = this.items[i].sellIn - 1;
-      }
-      if (this.items[i].sellIn < 0) {
-        if (this.items[i].name != 'Aged Brie') {
-          if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].quality > 0) {
-              if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                this.items[i].quality = this.items[i].quality - 1;
-              }
-            }
+    return this.items.map(({name, sellIn, quality}: Item) => {
+      const newSellIn = sellIn - 1;
+      switch(name) {
+        case ItemNames.AGED_BRIE:
+          if (sellIn >= 0) {
+            return new Item(name, newSellIn, guardQuality(quality +1));
           } else {
-            this.items[i].quality = this.items[i].quality - this.items[i].quality;
+            return new Item(name, newSellIn, guardQuality(quality + 2));
           }
-        } else {
-          if (this.items[i].quality < 50) {
-            this.items[i].quality = this.items[i].quality + 1;
+        case ItemNames.SULFURAS:
+          return new Item(name, sellIn, quality);
+        case ItemNames.BACKSTAGE:
+          if (sellIn > 10) {
+            return new Item(name, newSellIn, guardQuality(quality + 1));
+          } else if (sellIn > 5) {
+            return new Item(name, newSellIn, guardQuality(quality + 2));
+          } else if (sellIn > 0) {
+            return new Item(name, newSellIn, guardQuality(quality + 3));
+          } else {
+            return new Item(name, newSellIn, guardQuality(0));
           }
-        }
+        default:
+           if (sellIn >= 0) {
+             return new Item(name, newSellIn, guardQuality(quality + (isConjured(name) ? -2 : -1)));
+           } else {
+             return new Item(name, newSellIn, guardQuality(quality + (isConjured(name) ? -4 : -2)));
+           }
       }
-    }
-
-    return this.items;
+    });
   }
 }

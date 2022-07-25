@@ -28,8 +28,8 @@ describe("Gilded Rose", () => {
         expect(items[0].quality).toEqual(0);
     });
 
-    it("The Quality of can not be negative", () => {
-        const gildedRose = new Shop([new Item("foo", 0, 1)]);
+    it("The Quality of an item can not be negative", () => {
+        const gildedRose = new Shop([new Item("foo", 0, 0)]);
         gildedRose.updateQuality();
         const items = gildedRose.updateQuality();
         expect(items[0].quality).toEqual(0);
@@ -98,7 +98,7 @@ describe("Gilded Rose", () => {
     });
 
     it("`Conjured` items degrade in Quality twice as fast as normal items", () => {
-        const gildedRose = new Shop([new Item("Conjured", 1, 10)]);
+        const gildedRose = new Shop([new Item("Conjured something", 1, 10)]);
         const items = gildedRose.updateQuality();
         expect(items[0].quality).toEqual(8);
     });
