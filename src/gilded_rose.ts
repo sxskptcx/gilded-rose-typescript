@@ -1,6 +1,5 @@
 import {ItemNames} from "./ItemNames";
-import {Item} from "./Item";
-import guardQuality from "./guardQuality";
+import {guardQuality, Item} from "./Item";
 import isConjured from "./isConjured";
 
 export class Shop {
