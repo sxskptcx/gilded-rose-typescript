@@ -5,7 +5,7 @@ describe("Gilded Rose", () => {
         const gildedRose = new Shop([new Item('Conjured Mana Cake', 3, 6)]);
         const items = gildedRose.updateQuality();
 
-        expect(gildedRose.items[0].quality).toEqual(2);
+        expect(items[0].quality).toEqual(2);
     });
 
     it("RegularItemCheck", () => {
